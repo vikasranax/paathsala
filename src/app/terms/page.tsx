@@ -1,3 +1,10 @@
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Terms of Service',
+  description: "Paathsala's terms of service for students using the platform.",
+};
+
 export default function TermsPage() {
   return (
     <main style={{ padding: 'clamp(20px, 5vw, 48px)', maxWidth: '720px' }}>

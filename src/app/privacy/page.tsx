@@ -1,3 +1,10 @@
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Privacy Policy',
+  description: 'How Paathsala collects, uses, and protects your data.',
+};
+
 export default function PrivacyPage() {
   return (
     <main style={{ padding: 'clamp(20px, 5vw, 48px)', maxWidth: '720px' }}>
