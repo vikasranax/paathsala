@@ -49,7 +49,7 @@ export const metadata: Metadata = {
       'Free, multilingual exam preparation for SSC CGL, UPSC, NEET, JEE, Banking, Railway and more.',
   },
   twitter: {
-    card: 'summary',
+    card: 'summary_large_image',
     title: 'Paathsala — One School. Every Exam. Your Language.',
     description: 'Free, multilingual exam preparation for competitive exams across India.',
   },
