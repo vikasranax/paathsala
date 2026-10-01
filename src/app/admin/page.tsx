@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
+import { useLanguage } from '@/lib/LanguageContext';
 
 type Resource = {
   id: string;
@@ -26,6 +27,7 @@ export default function AdminPage() {
   const [loading, setLoading] = useState(true);
   const [pending, setPending] = useState<Resource[]>([]);
   const [reports, setReports] = useState<Report[]>([]);
+  const { t } = useLanguage();
 
   async function loadPending() {
     const { data, error } = await supabase
@@ -101,11 +103,11 @@ export default function AdminPage() {
   return (
     <main style={{ padding: '48px', maxWidth: '720px' }}>
       <h1 className="font-display text-2xl mb-6" style={{ color: 'var(--indigo)' }}>
-        Pending Resources
-      </h1>
+  {t('adminPending')}
+</h1>
 
       {pending.length === 0 ? (
-        <p style={{ color: 'var(--text-muted)', fontSize: '14px' }}>Nothing waiting for review.</p>
+        <p style={{ color: 'var(--text-muted)', fontSize: '14px' }}>{t('adminNoneWaiting')}</p>
       ) : (
         <div className="flex flex-col gap-3">
           {pending.map((r) => (
@@ -121,14 +123,14 @@ export default function AdminPage() {
                   onClick={() => publish(r.id)}
                   style={{ padding: '6px 14px', background: 'var(--leaf)', color: 'white', border: 'none', fontSize: '13px' }}
                 >
-                  Publish
-                </button>
+  {t('adminPublish')}
+</button>
                 <button
                   onClick={() => reject(r.id)}
                   style={{ padding: '6px 14px', background: 'var(--kumkum)', color: 'white', border: 'none', fontSize: '13px' }}
                 >
-                  Reject
-                </button>
+  {t('adminReject')}
+</button>
               </div>
             </div>
           ))}
@@ -136,10 +138,10 @@ export default function AdminPage() {
       )}
 
       <h2 className="font-display text-lg mt-8 mb-3" style={{ color: 'var(--indigo)' }}>
-        Reported Forum Posts
-      </h2>
+  {t('adminReports')}
+</h2>
       {reports.length === 0 ? (
-        <p style={{ color: 'var(--text-muted)', fontSize: '14px' }}>No reports right now.</p>
+       <p style={{ color: 'var(--text-muted)', fontSize: '14px' }}>{t('adminNoReports')}</p>
       ) : (
         <div className="flex flex-col gap-2">
           {reports.map((r) => (

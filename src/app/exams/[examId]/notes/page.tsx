@@ -3,21 +3,23 @@
 import { useState } from 'react';
 import { useParams } from 'next/navigation';
 import { getNotes } from '@/data/notes';
+import { useLanguage } from '@/lib/LanguageContext';
 
 export default function NotesPage() {
   const params = useParams<{ examId: string }>();
   const notes = getNotes(params.examId);
   const [openId, setOpenId] = useState<string | null>(null);
+  const { t } = useLanguage();
 
   if (notes.length === 0) {
-    return <main style={{ padding: '48px' }}>No notes available for this exam yet.</main>;
+    return <main style={{ padding: '48px' }}>{t('notesNone')}</main>;
   }
 
   return (
     <main style={{ padding: '48px', maxWidth: '640px' }}>
       <h1 className="font-display text-2xl mb-6" style={{ color: 'var(--indigo)' }}>
-        Notes
-      </h1>
+  {t('notesTitle')}
+</h1>
 
       <div className="flex flex-col gap-2">
         {notes.map((note) => {

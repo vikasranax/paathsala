@@ -7,7 +7,7 @@ import { translations, Locale, TranslationKey } from './i18n';
 type LanguageContextType = {
   locale: Locale;
   setLocale: (l: Locale) => void;
-  t: (key: TranslationKey) => string;
+  t: (key: TranslationKey, vars?: Record<string, string | number>) => string;
 };
 
 const LanguageContext = createContext<LanguageContextType | null>(null);
@@ -47,9 +47,15 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     }
   }
 
-  function t(key: TranslationKey): string {
-    return translations[locale][key] ?? translations.en[key];
+  function t(key: TranslationKey, vars?: Record<string, string | number>): string {
+  let text = translations[locale][key] ?? translations.en[key];
+  if (vars) {
+    for (const [k, v] of Object.entries(vars)) {
+      text = text.replace(`{${k}}`, String(v));
+    }
   }
+  return text;
+}
 
   return (
     <LanguageContext.Provider value={{ locale, setLocale, t }}>

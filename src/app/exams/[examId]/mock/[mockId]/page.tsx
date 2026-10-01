@@ -11,6 +11,7 @@ import LoginGate from '@/components/LoginGate';
 import { useLeaveConfirm } from '@/lib/useLeaveConfirm';
 import { incrementStat } from '@/lib/incrementStat';
 import { scoreMockTest } from '@/lib/scoreMockTest';
+import { useLanguage } from '@/lib/LanguageContext';
 
 export default function MockTestPage() {
   return (
@@ -32,6 +33,8 @@ function MockTestContent() {
   const [secondsLeft, setSecondsLeft] = useState((mock?.durationMins ?? 0) * 60);
   const [submitted, setSubmitted] = useState(false);
   const [result, setResult] = useState<{ score: number; breakdown: TopicResult[] } | null>(null);
+  const { t } = useLanguage();
+
   useLeaveConfirm(!submitted && Object.keys(answers).length > 0);
 
  async function handleSubmit() {
@@ -88,15 +91,15 @@ setSubmitted(true);
     return (
       <main style={{ padding: '48px', maxWidth: '560px' }}>
         <h1 className="font-display text-2xl mb-2" style={{ color: 'var(--indigo)' }}>
-          Test complete
-        </h1>
-        <p style={{ fontSize: '18px', marginBottom: '24px' }}>
-          Score: {result.score.toFixed(1)} / {questions.length}
-        </p>
+  {t('mockComplete')}
+</h1>
+<p style={{ fontSize: '18px', marginBottom: '24px' }}>
+  {t('mockScore')}: {result.score.toFixed(1)} / {questions.length}
+</p>
 
-        <h2 className="font-display text-lg mb-3" style={{ color: 'var(--indigo)' }}>
-          Topic breakdown
-        </h2>
+<h2 className="font-display text-lg mb-3" style={{ color: 'var(--indigo)' }}>
+  {t('mockTopicBreakdown')}
+</h2>
         {result.breakdown.map((t) => {
           const total = t.correct + t.wrong + t.skipped;
           const pct = total ? Math.round((t.correct / total) * 100) : 0;
@@ -156,11 +159,11 @@ setSubmitted(true);
       ))}
 
       <button
-        onClick={handleSubmit}
-        style={{ padding: '12px 24px', background: 'var(--indigo)', color: 'var(--paper)', border: 'none' }}
-      >
-        Submit test
-      </button>
+  onClick={handleSubmit}
+  style={{ padding: '12px 24px', background: 'var(--indigo)', color: 'var(--paper)', border: 'none' }}
+>
+  {t('mockSubmit')}
+</button>
     </main>
   );
 }

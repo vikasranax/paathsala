@@ -9,6 +9,7 @@ import Link from 'next/link';
 import { useLeaveConfirm } from '@/lib/useLeaveConfirm';
 import { incrementStat } from '@/lib/incrementStat';
 import { getDailySubset } from '@/lib/dailySubset';
+import { useLanguage } from '@/lib/LanguageContext';
 
 export default function QuizPage() {
   const params = useParams<{ examId: string }>();
@@ -20,6 +21,8 @@ export default function QuizPage() {
   const [score, setScore] = useState(0);
   const [selected, setSelected] = useState<number | null>(null);
   const [finished, setFinished] = useState(false);
+  const { t } = useLanguage();
+
   useLeaveConfirm(!finished && selected === null && index > 0);
 
   useEffect(() => {
@@ -57,11 +60,11 @@ export default function QuizPage() {
     return (
       <main style={{ padding: '48px', maxWidth: '480px' }}>
         <h1 className="font-display text-2xl mb-2" style={{ color: 'var(--indigo)' }}>
-          Quiz complete
-        </h1>
-        <p style={{ fontSize: '18px', color: 'var(--ink)' }}>
-          You scored {score} out of {questions.length}.
-        </p>
+  {t('quizComplete')}
+</h1>
+<p style={{ fontSize: '18px', color: 'var(--ink)' }}>
+  {t('quizScore', { score, total: questions.length })}
+</p>
         {userId ? (
   <p style={{ color: 'var(--text-muted)', fontSize: '14px', marginTop: '12px' }}>
     Today&apos;s streak has been recorded.
@@ -83,8 +86,8 @@ export default function QuizPage() {
   return (
     <main style={{ padding: '48px', maxWidth: '560px' }}>
       <p style={{ color: 'var(--text-muted)', fontSize: '13px', marginBottom: '8px' }}>
-        Question {index + 1} of {questions.length}
-      </p>
+  {t('quizQuestionOf', { current: index + 1, total: questions.length })}
+</p>
       <h1 className="font-display text-xl mb-6" style={{ color: 'var(--indigo)' }}>
         {current.text}
       </h1>
@@ -117,7 +120,7 @@ export default function QuizPage() {
           onClick={handleNext}
           style={{ marginTop: '20px', padding: '10px 20px', background: 'var(--marigold)', color: 'var(--ink)', border: 'none' }}
         >
-          {index + 1 < questions.length ? 'Next question' : 'Finish quiz'}
+          {index + 1 < questions.length ? t('quizNext') : t('quizFinish')}
         </button>
       )}
     </main>

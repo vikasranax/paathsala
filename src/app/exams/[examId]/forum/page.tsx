@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { supabase } from '@/lib/supabase';
 import { incrementStat } from '@/lib/incrementStat';
 import LoginGate from '@/components/LoginGate';
+import { useLanguage } from '@/lib/LanguageContext';
 
 type Post = {
   id: string;
@@ -33,6 +34,7 @@ function ForumContent() {
   const [newPost, setNewPost] = useState('');
   const [votedIds, setVotedIds] = useState<string[]>([]);
   const [error, setError] = useState('');
+  const { t } = useLanguage();
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -120,29 +122,29 @@ function ForumContent() {
   return (
     <main style={{ padding: '48px', maxWidth: '640px' }}>
       <h1 className="font-display text-2xl mb-6" style={{ color: 'var(--indigo)' }}>
-        Discussion
-      </h1>
+  {t('forumTitle')}
+</h1>
 
       <form onSubmit={handlePost} style={{ marginBottom: '32px' }}>
         <textarea
           value={newPost}
           onChange={(e) => setNewPost(e.target.value)}
-          placeholder="Ask a question or share something useful..."
+          placeholder={t('forumPlaceholder')}
           rows={3}
           style={{ width: '100%', padding: '10px', border: '1px solid var(--border)', fontFamily: 'inherit' }}
         />
         {error && <p style={{ color: 'var(--kumkum)', fontSize: '13px', marginTop: '6px' }}>{error}</p>}
         <button
-          type="submit"
-          style={{ marginTop: '8px', padding: '10px 20px', background: 'var(--marigold)', color: 'var(--ink)', border: 'none' }}
-        >
-          Post
-        </button>
+  type="submit"
+  style={{ marginTop: '8px', padding: '10px 20px', background: 'var(--marigold)', color: 'var(--ink)', border: 'none' }}
+>
+  {t('forumPost')}
+</button>
       </form>
 
       <div className="flex flex-col gap-3">
         {posts.length === 0 && (
-          <p style={{ color: 'var(--text-muted)', fontSize: '14px' }}>No posts yet — be the first to ask something.</p>
+         <p style={{ color: 'var(--text-muted)', fontSize: '14px' }}>{t('forumNoPosts')}</p>
         )}
         {posts.map((post) => (
           <div key={post.id} style={{ border: '1px solid var(--border)', padding: '14px 16px' }}>
@@ -181,8 +183,8 @@ function ForumContent() {
                   cursor: 'pointer',
                 }}
               >
-                Report
-              </button>
+  {t('forumReport')}
+</button>
             </div>
           </div>
         ))}
