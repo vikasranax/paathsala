@@ -15,9 +15,9 @@ export default function Home() {
   const upcoming = getUpcomingDeadlines(selectedIds);
 
   return (
-    <main>
+    <main className="home-main">
       <section style={{ background: 'var(--hero-bg)', height: '70vh', position: 'relative' }}>
-        <div style={{ position: 'absolute', inset: 0 }}>
+        <div className="hero-canvas" style={{ position: 'absolute', inset: 0 }}>
           <Hero3D />
         </div>
         <div
