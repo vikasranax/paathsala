@@ -12,6 +12,7 @@ import { useLeaveConfirm } from '@/lib/useLeaveConfirm';
 import { incrementStat } from '@/lib/incrementStat';
 import { scoreMockTest } from '@/lib/scoreMockTest';
 import { useLanguage } from '@/lib/LanguageContext';
+import { getDailySubset } from '@/lib/dailySubset';
 
 export default function MockTestPage() {
   return (
@@ -26,7 +27,7 @@ function MockTestContent() {
   const { examId, mockId } = params;
 
   const mock = getMockTest(examId, mockId);
-  const questions = getQuestions(examId);
+  const questions = getDailySubset(getQuestions(examId), 25, `${examId}-${mockId}`);
 
   const [userId, setUserId] = useState<string | null>(null);
   const [answers, setAnswers] = useState<Record<string, number>>({});

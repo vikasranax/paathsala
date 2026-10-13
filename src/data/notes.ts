@@ -1,3 +1,5 @@
+import { getAncientHistoryNotes } from './sharedAncientHistory';
+
 export type NoteSection = {
   heading: string;
   body: string;
@@ -55,5 +57,5 @@ export const notesByExam: Record<string, Note[]> = {
 };
 
 export function getNotes(examId: string): Note[] {
-  return notesByExam[examId] ?? [];
+  return [...(notesByExam[examId] ?? []), ...getAncientHistoryNotes(examId)];
 }
