@@ -1,5 +1,5 @@
 import { reasoningQuestions } from './sharedReasoning';
-import { getAncientHistoryQuestions } from './sharedAncientHistory';
+import { getPackQuestions } from './contentPacks';
 
 export type Question = {
   id: string;
@@ -58,5 +58,5 @@ export const questionsByExam: Record<string, Question[]> = {
 };
 
 export function getQuestions(examId: string): Question[] {
-  return [...(questionsByExam[examId] ?? []), ...getAncientHistoryQuestions(examId)];
+  return [...(questionsByExam[examId] ?? []), ...getPackQuestions(examId)];
 }

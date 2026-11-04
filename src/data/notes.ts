@@ -1,4 +1,4 @@
-import { getAncientHistoryNotes } from './sharedAncientHistory';
+import { getPackNotes } from './contentPacks';
 
 export type NoteSection = {
   heading: string;
@@ -57,5 +57,5 @@ export const notesByExam: Record<string, Note[]> = {
 };
 
 export function getNotes(examId: string): Note[] {
-  return [...(notesByExam[examId] ?? []), ...getAncientHistoryNotes(examId)];
+  return [...(notesByExam[examId] ?? []), ...getPackNotes(examId)];
 }

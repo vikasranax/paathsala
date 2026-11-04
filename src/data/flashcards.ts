@@ -1,5 +1,5 @@
 import { reasoningFlashcards } from './sharedReasoning';
-import { getAncientHistoryFlashcards } from './sharedAncientHistory';
+import { getPackFlashcards } from './contentPacks';
 
 export type Flashcard = {
   id: string;
@@ -22,5 +22,5 @@ export const flashcardsByExam: Record<string, Flashcard[]> = {
 };
 
 export function getFlashcards(examId: string): Flashcard[] {
-  return [...(flashcardsByExam[examId] ?? []), ...getAncientHistoryFlashcards(examId)];
+  return [...(flashcardsByExam[examId] ?? []), ...getPackFlashcards(examId)];
 }
