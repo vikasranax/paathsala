@@ -7,6 +7,9 @@ import {
   getAncientHistoryNotes,
 } from './sharedAncientHistory';
 import { polityPack } from './sharedPolity';
+import { modernHistoryPack } from './sharedModernHistory';
+import { geographyPack } from './sharedGeography';
+import { economyPack } from './sharedEconomy';
 
 export type ContentPack = {
   topicByExam: Record<string, string>;
@@ -16,7 +19,7 @@ export type ContentPack = {
 };
 
 // New batch: create a file that exports a ContentPack, import it above, add it here.
-const packs: ContentPack[] = [polityPack];
+const packs: ContentPack[] = [polityPack, modernHistoryPack, geographyPack, economyPack];
 
 export function getPackQuestions(examId: string): Question[] {
   const fromPacks = packs.flatMap((pack) => {

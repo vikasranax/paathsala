@@ -1,0 +1,187 @@
+import type { ContentPack } from './contentPacks';
+import { pts } from './packHelpers';
+
+export const modernHistoryPack: ContentPack = {
+  topicByExam: {
+    'upsc-cse': 'history',
+    'ssc-cgl': 'ga',
+    'rrb-ntpc': 'ga-railway',
+    nda: 'gat',
+    cds: 'ga-defence',
+  },
+
+  questions: [
+    { id: 'mh-1', text: 'The Battle of Plassey was fought in:', options: ['1757', '1764', '1761', '1799'], correctIndex: 0 },
+    { id: 'mh-2', text: 'By the Treaty of Allahabad (1765), the East India Company obtained the Diwani of:', options: ['Bengal, Bihar and Orissa', 'Awadh only', 'Carnatic', 'Bombay and Surat'], correctIndex: 0 },
+    { id: 'mh-3', text: 'The Subsidiary Alliance system was introduced by:', options: ['Lord Cornwallis', 'Lord Wellesley', 'Lord Dalhousie', 'Lord Bentinck'], correctIndex: 1 },
+    { id: 'mh-4', text: 'The Doctrine of Lapse is associated with:', options: ['Lord Wellesley', 'Lord Hastings', 'Lord Dalhousie', 'Lord Canning'], correctIndex: 2 },
+    { id: 'mh-5', text: 'The Permanent Settlement of 1793 was introduced in Bengal by:', options: ['Lord Cornwallis', 'Thomas Munro', 'Lord Curzon', 'Warren Hastings'], correctIndex: 0 },
+    { id: 'mh-6', text: 'The Ryotwari system of land revenue was mainly implemented in:', options: ['Bengal and Bihar', 'Madras and Bombay presidencies', 'Punjab and Delhi', 'Awadh'], correctIndex: 1 },
+    { id: 'mh-7', text: 'The Revolt of 1857 began at:', options: ['Delhi', 'Kanpur', 'Meerut', 'Jhansi'], correctIndex: 2 },
+    { id: 'mh-8', text: 'Who led the revolt at Lucknow in 1857?', options: ['Begum Hazrat Mahal', 'Rani Lakshmibai', 'Kunwar Singh', 'Tantia Tope'], correctIndex: 0 },
+    { id: 'mh-9', text: 'The Government of India Act 1858 transferred the rule of India from the East India Company to:', options: ['The British Crown', 'The Viceroy alone', 'Indian princes', 'The Privy Council'], correctIndex: 0 },
+    { id: 'mh-10', text: 'Sati was declared illegal in 1829 during the tenure of:', options: ['Lord William Bentinck', 'Lord Dalhousie', 'Lord Canning', 'Lord Ripon'], correctIndex: 0 },
+    { id: 'mh-11', text: 'The Arya Samaj was founded in 1875 by:', options: ['Raja Ram Mohan Roy', 'Dayananda Saraswati', 'Swami Vivekananda', 'Keshab Chandra Sen'], correctIndex: 1 },
+    { id: 'mh-12', text: 'Who founded the Satyashodhak Samaj in 1873?', options: ['Jyotirao Phule', 'B. R. Ambedkar', 'Narayana Guru', 'Periyar'], correctIndex: 0 },
+    { id: 'mh-13', text: 'The first President of the Indian National Congress (1885) was:', options: ['A. O. Hume', 'W. C. Bonnerjee', 'Dadabhai Naoroji', 'G. K. Gokhale'], correctIndex: 1 },
+    { id: 'mh-14', text: 'The Partition of Bengal in 1905 was carried out by:', options: ['Lord Curzon', 'Lord Minto', 'Lord Hardinge', 'Lord Lytton'], correctIndex: 0 },
+    { id: 'mh-15', text: 'The All India Muslim League was founded in 1906 at:', options: ['Lahore', 'Dhaka', 'Aligarh', 'Lucknow'], correctIndex: 1 },
+    { id: 'mh-16', text: 'The Congress split into Moderates and Extremists at the session of:', options: ['Calcutta 1906', 'Surat 1907', 'Lucknow 1916', 'Nagpur 1920'], correctIndex: 1 },
+    { id: 'mh-17', text: "Gandhi's first Satyagraha in India was at:", options: ['Champaran', 'Kheda', 'Ahmedabad', 'Bardoli'], correctIndex: 0 },
+    { id: 'mh-18', text: 'The Jallianwala Bagh massacre of 1919 took place in:', options: ['Lahore', 'Amritsar', 'Delhi', 'Lucknow'], correctIndex: 1 },
+    { id: 'mh-19', text: 'The Non-Cooperation Movement was withdrawn after the violence at:', options: ['Chauri Chaura', 'Bardoli', 'Dandi', 'Meerut'], correctIndex: 0 },
+    { id: 'mh-20', text: 'The Simon Commission was boycotted in India mainly because:', options: ['It had no Indian member', 'It recommended partition', 'It supported the Rowlatt Act', 'It was led by an Indian'], correctIndex: 0 },
+    { id: 'mh-21', text: 'The Dandi March (Salt Satyagraha) began in:', options: ['1920', '1930', '1935', '1942'], correctIndex: 1 },
+    { id: 'mh-22', text: 'The Poona Pact (1932) was signed between Gandhi and:', options: ['B. R. Ambedkar', 'Jinnah', 'Motilal Nehru', 'Lord Irwin'], correctIndex: 0 },
+    { id: 'mh-23', text: 'Dyarchy in the provinces was introduced by the:', options: ['Government of India Act 1909', 'Government of India Act 1919', 'Government of India Act 1935', 'Indian Independence Act 1947'], correctIndex: 1 },
+    { id: 'mh-24', text: 'Provincial autonomy came with the:', options: ['Government of India Act 1919', 'Government of India Act 1935', 'Cripps Mission', 'Cabinet Mission'], correctIndex: 1 },
+    { id: 'mh-25', text: "The slogan 'Do or Die' is associated with:", options: ['Quit India Movement', 'Civil Disobedience Movement', 'Swadeshi Movement', 'Khilafat Movement'], correctIndex: 0 },
+    { id: 'mh-26', text: 'The last Viceroy of British India was:', options: ['Lord Wavell', 'Lord Mountbatten', 'Lord Linlithgow', 'Lord Irwin'], correctIndex: 1 },
+    { id: 'mh-27', text: 'The Cabinet Mission arrived in India in:', options: ['1942', '1944', '1946', '1947'], correctIndex: 2 },
+    { id: 'mh-28', text: 'The Radcliffe Line demarcated the boundary between:', options: ['India and Pakistan', 'India and China', 'India and Nepal', 'India and Sri Lanka'], correctIndex: 0 },
+    { id: 'mh-29', text: 'The Swaraj Party (1923) was formed by:', options: ['C. R. Das and Motilal Nehru', 'Gandhi and Patel', 'Tilak and Gokhale', 'Bose and Nehru'], correctIndex: 0 },
+    { id: 'mh-30', text: 'The Indian National Army was reorganised in 1943 under the leadership of:', options: ['Subhas Chandra Bose', 'Mohan Singh', 'Jawaharlal Nehru', 'Vallabhbhai Patel'], correctIndex: 0 },
+  ],
+
+  flashcards: [
+    { id: 'mh-fc-1', front: '1857 Revolt: centres and leaders', back: 'Delhi: Bahadur Shah Zafar (nominal) and Bakht Khan. Kanpur: Nana Sahib and Tantia Tope. Lucknow: Begum Hazrat Mahal. Jhansi: Rani Lakshmibai. Arrah (Bihar): Kunwar Singh.' },
+    { id: 'mh-fc-2', front: 'Subsidiary Alliance (Wellesley)', back: 'The Indian ruler keeps British troops at his own cost, accepts a British Resident and cannot ally with other Europeans. Hyderabad was the first to sign (1798).' },
+    { id: 'mh-fc-3', front: 'Doctrine of Lapse (Dalhousie)', back: 'A state without a natural male heir passed to the British. Satara, Jhansi and Nagpur were annexed this way. Awadh was annexed in 1856 on grounds of misgovernment.' },
+    { id: 'mh-fc-4', front: 'Three land revenue systems', back: 'Permanent Settlement (zamindari): Bengal, Bihar, Orissa, 1793. Ryotwari: Madras and Bombay, with cultivators paying directly. Mahalwari: North-Western Provinces and Punjab, with village communities paying.' },
+    { id: 'mh-fc-5', front: 'Early Congress presidents', back: '1885 Bombay: W. C. Bonnerjee. 1886 Calcutta: Dadabhai Naoroji. 1925 Kanpur: Sarojini Naidu (first Indian woman president). 1929 Lahore: Jawaharlal Nehru (Purna Swaraj). 1931 Karachi: Vallabhbhai Patel.' },
+    { id: 'mh-fc-6', front: 'Lal-Bal-Pal', back: 'Lala Lajpat Rai (Punjab), Bal Gangadhar Tilak (Maharashtra) and Bipin Chandra Pal (Bengal): the leading Extremists who pushed for Swaraj and boycott.' },
+    { id: 'mh-fc-7', front: 'Social reformers and their organisations', back: 'Ram Mohan Roy: Brahmo Samaj (1828). Dayananda: Arya Samaj (1875). Phule: Satyashodhak Samaj (1873). Vivekananda: Ramakrishna Mission (1897). Sir Syed Ahmad Khan: Aligarh movement. Narayana Guru: SNDP Yogam (1903).' },
+    { id: 'mh-fc-8', front: 'Gandhian movements in order', back: 'Champaran (1917), Kheda and Ahmedabad (1918), Non-Cooperation (1920-22), Civil Disobedience (1930-34), Quit India (1942).' },
+    { id: 'mh-fc-9', front: 'Round Table Conferences', back: 'Three conferences (1930, 1931, 1932). Congress attended only the second, where Gandhi represented it after the Gandhi-Irwin Pact.' },
+    { id: 'mh-fc-10', front: 'Communal Award and Poona Pact', back: 'The Communal Award (1932, Ramsay MacDonald) gave separate electorates to the Depressed Classes. Gandhi fasted in protest, and the Poona Pact with Ambedkar replaced it with reserved seats in the general electorate.' },
+    { id: 'mh-fc-11', front: 'Missions before Independence', back: 'August Offer 1940. Cripps Mission 1942 (dominion status after the war, rejected). Cabinet Mission 1946 (Pethick-Lawrence, Cripps, A. V. Alexander; federal union plan).' },
+    { id: 'mh-fc-12', front: 'Steps to Independence in 1947', back: 'Mountbatten Plan (3 June), Indian Independence Act (18 July), independence on 15 August, Radcliffe boundary awards published on 17 August.' },
+    { id: 'mh-fc-13', front: 'Revolutionary movements', back: 'Ghadar Party (1913, San Francisco, Lala Har Dayal). Hindustan Republican Association (1924), reorganised as HSRA (1928). Bhagat Singh, Rajguru and Sukhdev were hanged on 23 March 1931.' },
+  ],
+
+  notes: [
+    {
+      id: 'mh-note-conquest',
+      title: 'British Expansion and the Revolt of 1857',
+      sections: [
+        {
+          heading: 'Conquest of India (1757-1856)',
+          body: pts([
+            'Plassey (1757): Robert Clive defeated Siraj-ud-Daulah of Bengal, helped by the treachery of Mir Jafar. It gave the Company its first major political hold.',
+            'Buxar (1764): the British defeated the combined forces of Mir Qasim, Shuja-ud-Daulah of Awadh and Mughal emperor Shah Alam II.',
+            'Treaty of Allahabad (1765): the Company received the Diwani (right to collect revenue) of Bengal, Bihar and Orissa.',
+            'Four Anglo-Mysore wars (1767-99) ended with the death of Tipu Sultan at Seringapatam in 1799.',
+            'Three Anglo-Maratha wars (1775-1818) ended the power of the Peshwa in 1818.',
+            "Wellesley's Subsidiary Alliance: rulers accepted British troops and a Resident, paid for the troops and gave up independent foreign relations.",
+            "Dalhousie's Doctrine of Lapse annexed states with no natural heir; Punjab was annexed in 1849 after the second Anglo-Sikh war; Awadh in 1856.",
+          ]),
+        },
+        {
+          heading: 'Economic Policies and Their Effects',
+          body: pts([
+            'Permanent Settlement (1793, Cornwallis): zamindars in Bengal, Bihar and Orissa paid a fixed revenue forever, but peasants bore the burden.',
+            'Ryotwari (Madras, Bombay): settlement directly with cultivators, associated with Thomas Munro.',
+            'Mahalwari (North-Western Provinces, Punjab): revenue collected from village communities.',
+            'Drain of wealth: Dadabhai Naoroji (Poverty and Un-British Rule in India) and R. C. Dutt argued that India was being drained economically.',
+            'Traditional handicrafts declined, and agriculture was commercialised (indigo, cotton, opium).',
+            'Railways began in 1853 (Bombay to Thane) under Dalhousie, along with the telegraph and the modern postal system.',
+          ]),
+        },
+        {
+          heading: 'The Revolt of 1857',
+          body: pts([
+            'Causes: annexations and the Doctrine of Lapse, heavy taxation, fears for religion, army grievances and the greased cartridges of the Enfield rifle.',
+            'It began at Meerut on 10 May 1857; the sepoys marched to Delhi and proclaimed Bahadur Shah Zafar emperor.',
+            'Leaders: Nana Sahib and Tantia Tope (Kanpur), Begum Hazrat Mahal (Lucknow), Rani Lakshmibai (Jhansi), Kunwar Singh (Arrah), Bakht Khan (Delhi).',
+            'It did not spread across the whole country; many princes, the Sikhs and the Gurkhas supported the British.',
+            'Delhi was recaptured in September 1857 and the revolt was suppressed by 1858.',
+            "Results: the Government of India Act 1858 ended Company rule; Queen Victoria's Proclamation (1 November 1858) promised religious non-interference; the office of Viceroy was created (Lord Canning was the first).",
+          ]),
+        },
+      ],
+    },
+    {
+      id: 'mh-note-reform',
+      title: 'Social Reform and the Rise of Nationalism',
+      sections: [
+        {
+          heading: 'Reformers and Movements',
+          body: pts([
+            'Raja Ram Mohan Roy: Brahmo Sabha (1828), campaign against sati, supported English education.',
+            'Ishwar Chandra Vidyasagar: the Widow Remarriage Act of 1856.',
+            'Dayananda Saraswati: Arya Samaj (1875), Satyarth Prakash, the call to go back to the Vedas.',
+            'Swami Vivekananda: Ramakrishna Mission (1897); spoke at the Parliament of Religions, Chicago (1893).',
+            'Jyotirao Phule: Satyashodhak Samaj (1873), book Gulamgiri, opened a girls school at Pune in 1848.',
+            'Sir Syed Ahmad Khan: Aligarh movement and the Mohammedan Anglo-Oriental College (1875).',
+            'Prarthana Samaj (1867, Bombay) with M. G. Ranade; Narayana Guru in Kerala (one caste, one religion, one God).',
+          ]),
+        },
+        {
+          heading: 'Rise of Nationalism',
+          body: pts([
+            'The Indian National Congress was founded in 1885; its first session in Bombay was presided over by W. C. Bonnerjee.',
+            'Moderates (Naoroji, Gokhale, Pherozeshah Mehta) used petitions and constitutional methods.',
+            'Extremists (Lal-Bal-Pal) demanded Swaraj and used boycott; Tilak said Swaraj was his birthright.',
+            'The Partition of Bengal (1905) led to the Swadeshi and Boycott movement. The 1906 Calcutta session under Naoroji named Swaraj as the goal.',
+            'The Congress split at Surat in 1907; the Muslim League was formed in 1906; the Morley-Minto reforms of 1909 gave separate electorates to Muslims.',
+            'Lucknow Pact (1916): Congress and Muslim League cooperated; the Home Rule Leagues were started by Tilak and Annie Besant.',
+            'Ghadar Party (1913, San Francisco) organised Indians abroad against British rule.',
+          ]),
+        },
+        {
+          heading: 'Education and the Press',
+          body: pts([
+            "Macaulay's Minute (1835) made English the medium of higher education.",
+            "Wood's Despatch (1854) is called the Magna Carta of English education; universities were set up at Calcutta, Bombay and Madras in 1857.",
+            'Hunter Commission (1882) reviewed education; the Indian Universities Act (1904) was passed by Curzon.',
+            'Vernacular Press Act (1878, Lytton) controlled Indian-language newspapers and was repealed by Ripon in 1882.',
+            'Ilbert Bill controversy (1883) exposed racial bias in the judiciary under Ripon.',
+            'Nationalist papers: Kesari and Mahratta (Tilak) and Amrita Bazar Patrika.',
+          ]),
+        },
+      ],
+    },
+    {
+      id: 'mh-note-freedom',
+      title: 'Gandhian Era to Independence',
+      sections: [
+        {
+          heading: 'Mass Movements (1917-1934)',
+          body: pts([
+            'Champaran (1917, indigo planters), Kheda (1918) and the Ahmedabad mill strike (1918) were Gandhi\'s early satyagrahas.',
+            'The Rowlatt Act (1919) led to protests; at Jallianwala Bagh, Amritsar, on 13 April 1919 General Dyer ordered firing on a peaceful gathering.',
+            'Khilafat and Non-Cooperation (1920-22): withdrawn after the violence at Chauri Chaura in February 1922.',
+            'Swaraj Party (1923) was formed by C. R. Das and Motilal Nehru to contest council elections.',
+            'Bardoli satyagraha (1928) under Vallabhbhai Patel earned him the title Sardar.',
+            'Simon Commission (1927) had no Indian member and was boycotted; the Lahore session of 1929 declared Purna Swaraj and 26 January 1930 was observed as Independence Day.',
+            'Civil Disobedience: the Dandi March began on 12 March 1930 and the salt law was broken on 6 April 1930.',
+            'Gandhi-Irwin Pact (March 1931); Communal Award (August 1932); Poona Pact (September 1932).',
+          ]),
+        },
+        {
+          heading: 'Constitutional Developments',
+          body: pts([
+            'Morley-Minto Reforms (1909): separate electorates for Muslims.',
+            'Montagu-Chelmsford Reforms and the Government of India Act 1919: dyarchy in the provinces.',
+            'Government of India Act 1935: provincial autonomy and a proposed federation (the federation never came into being).',
+            'In 1937 elections the Congress formed ministries in most provinces and resigned in 1939 when India was drawn into the war without consultation.',
+            'August Offer (1940) and the Cripps Mission (1942) failed to satisfy Indian leaders.',
+            'Cabinet Mission (1946): proposed a federal union, an interim government and a Constituent Assembly.',
+          ]),
+        },
+        {
+          heading: 'Towards Independence (1942-1947)',
+          body: pts([
+            'Quit India Movement: resolution passed at Bombay on 8 August 1942 with the call Do or Die; leaders were arrested, and Aruna Asaf Ali, Jayaprakash Narayan and Usha Mehta (secret radio) kept it alive.',
+            'Subhas Chandra Bose formed the Forward Bloc (1939) and led the Indian National Army and the Azad Hind government from 1943.',
+            'The INA trials at the Red Fort (1945-46) and the Royal Indian Navy mutiny (February 1946) shook British confidence.',
+            'Attlee announced in February 1947 that Britain would leave by June 1948; Mountbatten arrived in March 1947 and brought the date forward.',
+            'Mountbatten Plan (3 June 1947); the Indian Independence Act (18 July 1947) created India and Pakistan from 15 August 1947.',
+            'Princely states were free to join either country; Sardar Patel and V. P. Menon led their integration.',
+            'The Radcliffe Line, dividing Punjab and Bengal, was published on 17 August 1947.',
+          ]),
+        },
+      ],
+    },
+  ],
+};
