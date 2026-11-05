@@ -1,6 +1,7 @@
 import type { Question } from './questions';
 import type { Flashcard } from './flashcards';
 import type { Note } from './notes';
+import type { NoteCategory } from './categories';
 import {
   getAncientHistoryQuestions,
   getAncientHistoryFlashcards,
@@ -18,11 +19,18 @@ export type ContentPack = {
   notes: Omit<Note, 'topicId'>[];
 };
 
-// New batch: create a file that exports a ContentPack, import it above, add it here.
-const packs: ContentPack[] = [polityPack, modernHistoryPack, geographyPack, economyPack];
+type RegisteredPack = { category: NoteCategory; pack: ContentPack };
+
+// New batch: create the pack file, import it above, add one line here with its category.
+const packs: RegisteredPack[] = [
+  { category: 'polity', pack: polityPack },
+  { category: 'history', pack: modernHistoryPack },
+  { category: 'geography', pack: geographyPack },
+  { category: 'economy', pack: economyPack },
+];
 
 export function getPackQuestions(examId: string): Question[] {
-  const fromPacks = packs.flatMap((pack) => {
+  const fromPacks = packs.flatMap(({ pack }) => {
     const topicId = pack.topicByExam[examId];
     return topicId ? pack.questions.map((q) => ({ ...q, topicId })) : [];
   });
@@ -30,14 +38,15 @@ export function getPackQuestions(examId: string): Question[] {
 }
 
 export function getPackFlashcards(examId: string): Flashcard[] {
-  const fromPacks = packs.flatMap((pack) => (pack.topicByExam[examId] ? pack.flashcards : []));
+  const fromPacks = packs.flatMap(({ pack }) => (pack.topicByExam[examId] ? pack.flashcards : []));
   return [...getAncientHistoryFlashcards(examId), ...fromPacks];
 }
 
 export function getPackNotes(examId: string): Note[] {
-  const fromPacks = packs.flatMap((pack) => {
+  const ancient = getAncientHistoryNotes(examId).map((n) => ({ ...n, category: 'history' as const }));
+  const fromPacks = packs.flatMap(({ category, pack }) => {
     const topicId = pack.topicByExam[examId];
-    return topicId ? pack.notes.map((n) => ({ ...n, topicId })) : [];
+    return topicId ? pack.notes.map((n) => ({ ...n, topicId, category })) : [];
   });
-  return [...getAncientHistoryNotes(examId), ...fromPacks];
+  return [...ancient, ...fromPacks];
 }

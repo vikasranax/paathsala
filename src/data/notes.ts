@@ -1,3 +1,5 @@
+import { categoryFromTopic, type NoteCategory } from './categories';
+import { reasoningNotes } from './sharedReasoning';
 import { getPackNotes } from './contentPacks';
 
 export type NoteSection = {
@@ -9,11 +11,10 @@ export type Note = {
   id: string;
   topicId: string;
   title: string;
+  category?: NoteCategory;
   body?: string;
   sections?: NoteSection[];
 };
-
-import { reasoningNotes } from './sharedReasoning';
 
 export const notesByExam: Record<string, Note[]> = {
   'ssc-cgl': [
@@ -31,10 +32,6 @@ export const notesByExam: Record<string, Note[]> = {
   ],
   'jee-adv': [
     { id: 'n1', topicId: 'maths', title: 'Differentiation Rules', body: 'Power rule: d/dx(xⁿ) = nxⁿ⁻¹. Product rule and chain rule are the two most tested in JEE Advanced-level problems.' },
-  ],
-  'upsc-cse': [
-    { id: 'n1', topicId: 'polity', title: 'Fundamental Rights Overview', body: 'Six categories: Equality, Freedom, against Exploitation, Freedom of Religion, Cultural/Educational Rights, Constitutional Remedies.' },
-    { id: 'n2', topicId: 'economy', title: 'Fiscal vs Monetary Policy', body: 'Fiscal policy is spending/taxation, run by the Finance Ministry. Monetary policy is money supply/interest rates, run by the RBI.' },
   ],
   'ibps-po': [
     { id: 'n1', topicId: 'ga-banking', title: 'Key Banking Terms', body: 'NPA: a loan where payments are overdue 90+ days. Repo rate: rate at which RBI lends to banks. Reverse repo: rate at which RBI borrows from banks.' },
@@ -57,5 +54,9 @@ export const notesByExam: Record<string, Note[]> = {
 };
 
 export function getNotes(examId: string): Note[] {
-  return [...(notesByExam[examId] ?? []), ...getPackNotes(examId)];
+  const own = (notesByExam[examId] ?? []).map((note) => ({
+    ...note,
+    category: note.category ?? categoryFromTopic(note.topicId),
+  }));
+  return [...own, ...getPackNotes(examId)];
 }
