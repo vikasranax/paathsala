@@ -11,6 +11,7 @@ import { polityPack } from './sharedPolity';
 import { modernHistoryPack } from './sharedModernHistory';
 import { geographyPack } from './sharedGeography';
 import { economyPack } from './sharedEconomy';
+import { mathsPack1 } from './sharedMaths1';
 
 export type ContentPack = {
   topicByExam: Record<string, string>;
@@ -27,6 +28,7 @@ const packs: RegisteredPack[] = [
   { category: 'history', pack: modernHistoryPack },
   { category: 'geography', pack: geographyPack },
   { category: 'economy', pack: economyPack },
+  { category: 'maths', pack: mathsPack1 },
 ];
 
 export function getPackQuestions(examId: string): Question[] {
