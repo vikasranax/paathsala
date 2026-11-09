@@ -5,7 +5,8 @@ import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { exams } from '@/data/exams';
 import { examMeta } from '@/data/examMeta';
-import { getSyllabus } from '@/data/syllabus';
+import { getExamSyllabus } from '@/data/syllabus';
+import type { SyllabusStage } from '@/data/syllabusTypes';
 import { getCompleted, toggleTopic } from '@/lib/syllabusProgress';
 import { mockTestsByExam } from '@/data/mockTests';
 import { PenLine, Layers, BookOpen, MessageSquare, Link2, BarChart3, TrendingUp, Newspaper, Clock } from 'lucide-react';
@@ -28,27 +29,35 @@ export default function ExamDashboard() {
   const exam = exams.find((e) => e.id === examId);
   const meta = examMeta[examId];
   const Icon = meta?.icon;
-  const topics = getSyllabus(examId);
+  const syllabus = getExamSyllabus(examId);
+
   const [completed, setCompleted] = useState<string[]>([]);
+  const [stageId, setStageId] = useState<string | null>(null);
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setCompleted(getCompleted(examId));
   }, [examId]);
 
-  function handleToggle(topicId: string) {
-    setCompleted(toggleTopic(examId, topicId));
+  function handleToggle(itemId: string) {
+    setCompleted(toggleTopic(examId, itemId));
   }
 
   if (!exam) {
     return <main style={{ padding: '48px' }}>Exam not found.</main>;
   }
 
-  const progress = topics.length
-    ? Math.round((completed.length / topics.length) * 100)
-    : 0;
-
+  const stages = syllabus?.stages ?? [];
+  const activeStage = stages.find((s) => s.id === stageId) ?? stages[0];
+  const allItemIds = stages.flatMap((s) => s.subjects.flatMap((su) => su.items.map((i) => i.id)));
+  const doneTotal = allItemIds.filter((id) => completed.includes(id)).length;
+  const progress = allItemIds.length ? Math.round((doneTotal / allItemIds.length) * 100) : 0;
   const mockTests = mockTestsByExam[examId] ?? [];
+
+  function stageCounts(stage: SyllabusStage) {
+    const ids = stage.subjects.flatMap((su) => su.items.map((i) => i.id));
+    return { done: ids.filter((id) => completed.includes(id)).length, total: ids.length };
+  }
 
   return (
     <main style={{ padding: 'clamp(20px, 5vw, 48px)', maxWidth: '820px' }}>
@@ -64,10 +73,7 @@ export default function ExamDashboard() {
         </div>
       </div>
 
-      <div
-        className="grid gap-3"
-        style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(150px, 1fr))', margin: '32px 0' }}
-      >
+      <div className="grid gap-3" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(150px, 1fr))', margin: '32px 0' }}>
         {actionLinks.map(({ key, label, icon: ActionIcon, primary }) => (
           <Link
             key={key}
@@ -96,9 +102,7 @@ export default function ExamDashboard() {
         Mock Tests
       </h2>
       {mockTests.length === 0 ? (
-        <p style={{ color: 'var(--text-muted)', fontSize: '14px', marginBottom: '32px' }}>
-          No mock tests available yet.
-        </p>
+        <p style={{ color: 'var(--text-muted)', fontSize: '14px', marginBottom: '32px' }}>No mock tests available yet.</p>
       ) : (
         <div className="flex flex-col gap-2" style={{ marginBottom: '32px' }}>
           {mockTests.map((m) => (
@@ -116,7 +120,9 @@ export default function ExamDashboard() {
               }}
             >
               <Clock size={16} />
-              <span>{m.name} — {m.durationMins} min</span>
+              <span>
+                {m.name} — {m.durationMins} min
+              </span>
             </Link>
           ))}
         </div>
@@ -125,31 +131,90 @@ export default function ExamDashboard() {
       <h2 className="font-display text-lg mb-3" style={{ color: 'var(--indigo)' }}>
         Syllabus
       </h2>
-      {topics.length === 0 ? (
-        <p style={{ color: 'var(--text-muted)', fontSize: '14px' }}>
-          Syllabus for this exam is coming soon.
-        </p>
+
+      {!syllabus || !activeStage ? (
+        <p style={{ color: 'var(--text-muted)', fontSize: '14px' }}>Syllabus for this exam is coming soon.</p>
       ) : (
         <>
           <div style={{ background: 'var(--border)', height: '10px', marginBottom: '8px' }}>
             <div style={{ background: 'var(--marigold)', width: `${progress}%`, height: '100%' }} />
           </div>
-          <p style={{ fontSize: '13px', color: 'var(--text-muted)', marginBottom: '16px' }}>{progress}% complete</p>
+          <p style={{ fontSize: '13px', color: 'var(--text-muted)', marginBottom: '18px' }}>
+            {progress}% complete · {doneTotal} of {allItemIds.length} topics
+          </p>
 
-          <ul style={{ listStyle: 'none', padding: 0 }}>
-            {topics.map((topic) => (
-              <li key={topic.id} style={{ marginBottom: '8px' }}>
-                <label style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer' }}>
-                  <input
-                    type="checkbox"
-                    checked={completed.includes(topic.id)}
-                    onChange={() => handleToggle(topic.id)}
-                  />
-                  <span style={{ color: 'var(--ink)' }}>{topic.name}</span>
-                </label>
-              </li>
-            ))}
-          </ul>
+          {stages.length > 1 && (
+            <div className="flex flex-wrap gap-2" style={{ marginBottom: '16px' }}>
+              {stages.map((s) => {
+                const active = s.id === activeStage.id;
+                const { done, total } = stageCounts(s);
+                return (
+                  <button
+                    key={s.id}
+                    onClick={() => setStageId(s.id)}
+                    style={{
+                      padding: '7px 12px',
+                      fontSize: '13px',
+                      cursor: 'pointer',
+                      border: `1px solid ${active ? 'var(--hero-bg)' : 'var(--border)'}`,
+                      background: active ? 'var(--hero-bg)' : 'var(--surface)',
+                      color: active ? 'var(--hero-text)' : 'var(--indigo)',
+                    }}
+                  >
+                    {s.name} ({done}/{total})
+                  </button>
+                );
+              })}
+            </div>
+          )}
+
+          {activeStage.pattern && (
+            <p style={{ fontSize: '13px', color: 'var(--ink)', marginBottom: '14px', lineHeight: 1.6 }}>{activeStage.pattern}</p>
+          )}
+
+          <div className="flex flex-col gap-2">
+            {activeStage.subjects.map((subj) => {
+              const done = subj.items.filter((i) => completed.includes(i.id)).length;
+              return (
+                <details key={subj.id} style={{ border: '1px solid var(--border)', background: 'var(--surface)' }}>
+                  <summary
+                    style={{
+                      cursor: 'pointer',
+                      padding: '12px 14px',
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      gap: '12px',
+                      color: 'var(--indigo)',
+                      fontFamily: 'var(--font-space-grotesk)',
+                      fontSize: '14.5px',
+                    }}
+                  >
+                    <span>{subj.name}</span>
+                    <span style={{ color: 'var(--text-muted)', fontSize: '12.5px', whiteSpace: 'nowrap' }}>
+                      {done}/{subj.items.length}
+                    </span>
+                  </summary>
+                  <ul style={{ listStyle: 'none', margin: 0, padding: '4px 14px 14px' }}>
+                    {subj.items.map((item) => (
+                      <li key={item.id} style={{ marginBottom: '8px' }}>
+                        <label style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', cursor: 'pointer', fontSize: '14px', color: 'var(--ink)' }}>
+                          <input
+                            type="checkbox"
+                            checked={completed.includes(item.id)}
+                            onChange={() => handleToggle(item.id)}
+                            style={{ marginTop: '3px' }}
+                          />
+                          <span>{item.name}</span>
+                        </label>
+                      </li>
+                    ))}
+                  </ul>
+                </details>
+              );
+            })}
+          </div>
+
+          <p style={{ fontSize: '12px', color: 'var(--text-muted)', marginTop: '18px', lineHeight: 1.6 }}>{syllabus.note}</p>
         </>
       )}
     </main>
