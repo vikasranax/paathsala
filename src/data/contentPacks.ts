@@ -13,6 +13,8 @@ import { geographyPack } from './sharedGeography';
 import { economyPack } from './sharedEconomy';
 import { mathsPack1 } from './sharedMaths1';
 import { englishPack1 } from './sharedEnglish1';
+import { environmentPack } from './sharedEnvironment';
+import { scienceTechPack } from './sharedScienceTech';
 
 export type ContentPack = {
   topicByExam: Record<string, string>;
@@ -31,6 +33,8 @@ const packs: RegisteredPack[] = [
   { category: 'economy', pack: economyPack },
   { category: 'maths', pack: mathsPack1 },
   { category: 'english', pack: englishPack1 },
+  { category: 'environment', pack: environmentPack },
+  { category: 'science', pack: scienceTechPack },
 ];
 
 export function getPackQuestions(examId: string): Question[] {
