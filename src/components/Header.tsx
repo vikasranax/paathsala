@@ -56,6 +56,7 @@ export default function Header() {
     { href: '/', label: t('home') },
     { href: '/leaderboard', label: 'Leaderboard' },
     { href: '/arena', label: 'Arena' },
+    { href: '/gallery', label: 'Gallery' },
     userId ? { href: '/profile', label: t('profile') } : { href: '/login', label: t('login') },
   ];
 

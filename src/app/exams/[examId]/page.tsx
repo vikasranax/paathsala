@@ -7,9 +7,11 @@ import { exams } from '@/data/exams';
 import { examMeta } from '@/data/examMeta';
 import { getExamSyllabus } from '@/data/syllabus';
 import type { SyllabusStage } from '@/data/syllabusTypes';
+import { countTopicContent } from '@/data/contentIndex';
+import { examResources } from '@/data/officialResources';
 import { getCompleted, toggleTopic } from '@/lib/syllabusProgress';
 import { mockTestsByExam } from '@/data/mockTests';
-import { PenLine, Layers, BookOpen, MessageSquare, Link2, BarChart3, TrendingUp, Newspaper, Clock } from 'lucide-react';
+import { PenLine, Layers, BookOpen, MessageSquare, Link2, BarChart3, TrendingUp, Newspaper, Clock, ExternalLink } from 'lucide-react';
 
 const actionLinks = [
   { key: 'quiz', label: "Today's quiz", icon: PenLine, primary: true },
@@ -49,10 +51,16 @@ export default function ExamDashboard() {
 
   const stages = syllabus?.stages ?? [];
   const activeStage = stages.find((s) => s.id === stageId) ?? stages[0];
-  const allItemIds = stages.flatMap((s) => s.subjects.flatMap((su) => su.items.map((i) => i.id)));
-  const doneTotal = allItemIds.filter((id) => completed.includes(id)).length;
-  const progress = allItemIds.length ? Math.round((doneTotal / allItemIds.length) * 100) : 0;
+  const allItems = stages.flatMap((s) => s.subjects.flatMap((su) => su.items));
+  const doneTotal = allItems.filter((i) => completed.includes(i.id)).length;
+  const progress = allItems.length ? Math.round((doneTotal / allItems.length) * 100) : 0;
+  const linkedItems = allItems.filter((i) => i.topics.length > 0);
+  const coveredItems = linkedItems.filter((i) => {
+    const c = countTopicContent(i.topics);
+    return c.notes + c.flashcards + c.questions > 0;
+  });
   const mockTests = mockTestsByExam[examId] ?? [];
+  const officialLinks = examResources[examId] ?? [];
 
   function stageCounts(stage: SyllabusStage) {
     const ids = stage.subjects.flatMap((su) => su.items.map((i) => i.id));
@@ -139,9 +147,14 @@ export default function ExamDashboard() {
           <div style={{ background: 'var(--border)', height: '10px', marginBottom: '8px' }}>
             <div style={{ background: 'var(--marigold)', width: `${progress}%`, height: '100%' }} />
           </div>
-          <p style={{ fontSize: '13px', color: 'var(--text-muted)', marginBottom: '18px' }}>
-            {progress}% complete · {doneTotal} of {allItemIds.length} topics
+          <p style={{ fontSize: '13px', color: 'var(--text-muted)', marginBottom: linkedItems.length > 0 ? '4px' : '18px' }}>
+            {progress}% complete · {doneTotal} of {allItems.length} topics
           </p>
+          {linkedItems.length > 0 && (
+            <p style={{ fontSize: '13px', color: 'var(--text-muted)', marginBottom: '18px' }}>
+              Study material available for {coveredItems.length} of {linkedItems.length} topics. Open a topic to see it.
+            </p>
+          )}
 
           {stages.length > 1 && (
             <div className="flex flex-wrap gap-2" style={{ marginBottom: '16px' }}>
@@ -195,19 +208,46 @@ export default function ExamDashboard() {
                     </span>
                   </summary>
                   <ul style={{ listStyle: 'none', margin: 0, padding: '4px 14px 14px' }}>
-                    {subj.items.map((item) => (
-                      <li key={item.id} style={{ marginBottom: '8px' }}>
-                        <label style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', cursor: 'pointer', fontSize: '14px', color: 'var(--ink)' }}>
+                    {subj.items.map((item) => {
+                      if (item.topics.length === 0) {
+                        return (
+                          <li key={item.id} style={{ marginBottom: '8px' }}>
+                            <label style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', cursor: 'pointer', fontSize: '14px', color: 'var(--ink)' }}>
+                              <input
+                                type="checkbox"
+                                checked={completed.includes(item.id)}
+                                onChange={() => handleToggle(item.id)}
+                                style={{ marginTop: '3px' }}
+                              />
+                              <span>{item.name}</span>
+                            </label>
+                          </li>
+                        );
+                      }
+                      const counts = countTopicContent(item.topics);
+                      const hasMaterial = counts.notes + counts.flashcards + counts.questions > 0;
+                      return (
+                        <li key={item.id} style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', marginBottom: '8px' }}>
                           <input
                             type="checkbox"
                             checked={completed.includes(item.id)}
                             onChange={() => handleToggle(item.id)}
+                            aria-label={`Mark ${item.name} as done`}
                             style={{ marginTop: '3px' }}
                           />
-                          <span>{item.name}</span>
-                        </label>
-                      </li>
-                    ))}
+                          <div style={{ minWidth: 0 }}>
+                            <Link href={`/exams/${examId}/topic/${item.id}`} style={{ fontSize: '14px', color: 'var(--indigo)', textDecoration: 'underline' }}>
+                              {item.name}
+                            </Link>
+                            <span style={{ display: 'block', fontSize: '12px', color: 'var(--text-muted)' }}>
+                              {hasMaterial
+                                ? `${counts.notes} notes · ${counts.questions} questions · ${counts.flashcards} flashcards`
+                                : 'No material yet'}
+                            </span>
+                          </div>
+                        </li>
+                      );
+                    })}
                   </ul>
                 </details>
               );
@@ -215,6 +255,29 @@ export default function ExamDashboard() {
           </div>
 
           <p style={{ fontSize: '12px', color: 'var(--text-muted)', marginTop: '18px', lineHeight: 1.6 }}>{syllabus.note}</p>
+
+          {officialLinks.length > 0 && (
+            <div style={{ marginTop: '20px' }}>
+              <h3 className="font-display" style={{ fontSize: '15px', color: 'var(--indigo)', marginBottom: '8px' }}>
+                Official sources for this exam
+              </h3>
+              {officialLinks.map((r) => (
+                <a
+                  key={r.url}
+                  href={r.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ display: 'flex', justifyContent: 'space-between', gap: '12px', padding: '12px 14px', border: '1px solid var(--border)', background: 'var(--surface)', textDecoration: 'none' }}
+                >
+                  <span>
+                    <span style={{ display: 'block', fontSize: '14px', fontWeight: 600, color: 'var(--indigo)' }}>{r.title}</span>
+                    <span style={{ display: 'block', fontSize: '12.5px', color: 'var(--text-muted)', marginTop: '2px' }}>{r.note}</span>
+                  </span>
+                  <ExternalLink size={14} color="var(--text-muted)" style={{ flexShrink: 0, marginTop: '3px' }} />
+                </a>
+              ))}
+            </div>
+          )}
         </>
       )}
     </main>

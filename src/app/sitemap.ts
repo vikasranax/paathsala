@@ -1,10 +1,11 @@
 import { MetadataRoute } from 'next';
 import { exams } from '@/data/exams';
+import { galleryItems } from '@/data/gallery';
 
 const BASE_URL = 'https://paathsala.vercel.app';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const staticRoutes = ['', '/leaderboard', '/arena', '/privacy', '/terms', '/login'].map((path) => ({
+  const staticRoutes = ['', '/leaderboard', '/arena', '/gallery', '/gallery/maps', '/privacy', '/terms', '/login'].map((path) => ({
     url: `${BASE_URL}${path}`,
     lastModified: new Date(),
   }));
@@ -16,5 +17,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE_URL}/exams/${exam.id}/cutoff`, lastModified: new Date() },
   ]);
 
-  return [...staticRoutes, ...examRoutes];
+  const galleryRoutes = galleryItems.map((item) => ({
+    url: `${BASE_URL}/gallery/${item.id}`,
+    lastModified: new Date(),
+  }));
+
+  return [...staticRoutes, ...examRoutes, ...galleryRoutes];
 }

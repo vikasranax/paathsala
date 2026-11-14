@@ -2,6 +2,7 @@ import type { Question } from './questions';
 import type { Flashcard } from './flashcards';
 import type { Note } from './notes';
 import type { NoteCategory } from './categories';
+import type { TopicKey } from './topics';
 import {
   getAncientHistoryQuestions,
   getAncientHistoryFlashcards,
@@ -15,17 +16,29 @@ import { mathsPack1 } from './sharedMaths1';
 import { englishPack1 } from './sharedEnglish1';
 import { environmentPack } from './sharedEnvironment';
 import { scienceTechPack } from './sharedScienceTech';
+import { medievalPack } from './sharedMedieval';
+import { artCulturePack } from './sharedArtCulture';
+import { ancientEarlyPack } from './sharedAncientEarly';
+import { worldHistoryPack } from './sharedWorldHistory';
+
+// A pack can carry its own topic tags (ids to topic keys). Older packs are tagged in contentTags.ts.
+export type PackTags = {
+  questions: Record<string, TopicKey[]>;
+  flashcards: Record<string, TopicKey[]>;
+  notes: Record<string, TopicKey[]>;
+};
 
 export type ContentPack = {
   topicByExam: Record<string, string>;
   questions: Omit<Question, 'topicId'>[];
   flashcards: Flashcard[];
   notes: Omit<Note, 'topicId'>[];
+  tags?: PackTags;
 };
 
 type RegisteredPack = { category: NoteCategory; pack: ContentPack };
 
-// New batch: create the pack file, import it above, add one line here with its category.
+// New batch: create the pack file (with its tags), import it above, add one line here.
 const packs: RegisteredPack[] = [
   { category: 'polity', pack: polityPack },
   { category: 'history', pack: modernHistoryPack },
@@ -35,7 +48,15 @@ const packs: RegisteredPack[] = [
   { category: 'english', pack: englishPack1 },
   { category: 'environment', pack: environmentPack },
   { category: 'science', pack: scienceTechPack },
+  { category: 'history', pack: medievalPack },
+  { category: 'history', pack: artCulturePack },
+  { category: 'history', pack: ancientEarlyPack },
+  { category: 'history', pack: worldHistoryPack },
 ];
+
+export function getRegisteredPacks(): ContentPack[] {
+  return packs.map((p) => p.pack);
+}
 
 export function getPackQuestions(examId: string): Question[] {
   const fromPacks = packs.flatMap(({ pack }) => {
