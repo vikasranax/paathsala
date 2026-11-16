@@ -20,6 +20,7 @@ import { medievalPack } from './sharedMedieval';
 import { artCulturePack } from './sharedArtCulture';
 import { ancientEarlyPack } from './sharedAncientEarly';
 import { worldHistoryPack } from './sharedWorldHistory';
+import { polityGovernancePack } from './sharedPolityGovernance';
 
 // A pack can carry its own topic tags (ids to topic keys). Older packs are tagged in contentTags.ts.
 export type PackTags = {
@@ -52,6 +53,7 @@ const packs: RegisteredPack[] = [
   { category: 'history', pack: artCulturePack },
   { category: 'history', pack: ancientEarlyPack },
   { category: 'history', pack: worldHistoryPack },
+  { category: 'polity', pack: polityGovernancePack },
 ];
 
 export function getRegisteredPacks(): ContentPack[] {

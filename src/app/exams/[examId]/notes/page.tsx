@@ -5,13 +5,14 @@ import { useParams } from 'next/navigation';
 import { getNotes } from '@/data/notes';
 import { categoryLabels, categoryOrder, gsCategories, type NoteCategory } from '@/data/categories';
 import { useLanguage } from '@/lib/LanguageContext';
+import { localizeNote } from '@/lib/localize';
 
 type FilterId = 'all' | 'gs' | NoteCategory;
 
 export default function NotesPage() {
   const params = useParams<{ examId: string }>();
-  const { t } = useLanguage();
-  const notes = useMemo(() => getNotes(params.examId), [params.examId]);
+  const { t, locale } = useLanguage();
+  const notes = useMemo(() => getNotes(params.examId).map((n) => localizeNote(n, locale)), [params.examId, locale]);
   const [openId, setOpenId] = useState<string | null>(null);
   const [filter, setFilter] = useState<FilterId>('all');
   const [query, setQuery] = useState('');

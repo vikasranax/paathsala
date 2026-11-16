@@ -1,3 +1,4 @@
+import { generatedImages } from './galleryImages.generated';
 import type { TopicKey } from './topics';
 
 export type GalleryCategory = 'indus' | 'ancient' | 'temples' | 'islamic' | 'sculpture' | 'world';
@@ -30,7 +31,7 @@ export type GalleryItem = {
   viewUrl?: string;
 };
 
-export const galleryItems: GalleryItem[] = [
+const baseItems: GalleryItem[] = [
   {
     id: 'dancing-girl',
     title: 'Dancing Girl, Mohenjo-daro',
@@ -400,3 +401,8 @@ export const galleryItems: GalleryItem[] = [
     topics: ['hist.world-history'],
   },
 ];
+
+export const galleryItems: GalleryItem[] = baseItems.map((item) => ({
+  ...item,
+  image: item.image ?? generatedImages[item.id],
+}));
