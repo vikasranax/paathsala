@@ -21,17 +21,24 @@ export default function GalleryPage() {
         Heritage sites, sculptures and wonders of the world. Open one to read about it, think first, test yourself and see which syllabus topics it belongs to.
       </p>
 
-            <Link
-        href="/gallery/maps"
-        style={{ display: 'block', border: '1px solid var(--marigold)', background: 'var(--surface)', padding: '14px 16px', marginBottom: '20px', textDecoration: 'none' }}
-      >
-        <span className="font-display" style={{ display: 'block', fontSize: '16px', color: 'var(--indigo)' }}>
-          State maps
-        </span>
-        <span style={{ display: 'block', fontSize: '13px', color: 'var(--text-muted)', marginTop: '2px' }}>
-          Crops, minerals, parks, dances and capitals on a map of India, with a test mode and atlas links.
-        </span>
-      </Link>
+      <div className="grid gap-3" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', marginBottom: '22px' }}>
+        <Link href="/gallery/atlas" style={{ display: 'block', border: '1px solid var(--marigold)', background: 'var(--surface)', padding: '14px 16px', textDecoration: 'none' }}>
+          <span className="font-display" style={{ display: 'block', fontSize: '16px', color: 'var(--indigo)' }}>
+            Atlas: India and the world
+          </span>
+          <span style={{ display: 'block', fontSize: '13px', color: 'var(--text-muted)', marginTop: '2px' }}>
+            Political and physical maps with minerals, crops, energy sites, landforms, lakes, ports and capitals marked. Zoom in, hide the names and test yourself.
+          </span>
+        </Link>
+        <Link href="/gallery/maps" style={{ display: 'block', border: '1px solid var(--border)', background: 'var(--surface)', padding: '14px 16px', textDecoration: 'none' }}>
+          <span className="font-display" style={{ display: 'block', fontSize: '16px', color: 'var(--indigo)' }}>
+            State tile maps
+          </span>
+          <span style={{ display: 'block', fontSize: '13px', color: 'var(--text-muted)', marginTop: '2px' }}>
+            A quick schematic of states: crops, minerals, parks, dances and capitals, with a test mode.
+          </span>
+        </Link>
+      </div>
 
       <div className="flex flex-wrap gap-2" style={{ marginBottom: '24px' }}>
         {chips.map((chip) => {

@@ -5,7 +5,7 @@ import { galleryItems } from '@/data/gallery';
 const BASE_URL = 'https://paathsala.vercel.app';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const staticRoutes = ['', '/leaderboard', '/arena', '/gallery', '/gallery/maps', '/privacy', '/terms', '/login'].map((path) => ({
+  const staticRoutes = ['', '/leaderboard', '/arena', '/gallery', '/gallery/atlas', '/gallery/maps', '/privacy', '/terms', '/login'].map((path) => ({
     url: `${BASE_URL}${path}`,
     lastModified: new Date(),
   }));
