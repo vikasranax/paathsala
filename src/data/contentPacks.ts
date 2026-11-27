@@ -23,6 +23,7 @@ import { worldHistoryPack } from './sharedWorldHistory';
 import { polityGovernancePack } from './sharedPolityGovernance';
 import { ethicsPack } from './sharedEthics';
 import { irPack } from './sharedIR';
+import { securityPack } from './sharedSecurity';
 
 // A pack can carry its own topic tags (ids to topic keys). Older packs are tagged in contentTags.ts.
 export type PackTags = {
@@ -58,6 +59,7 @@ const packs: RegisteredPack[] = [
   { category: 'polity', pack: polityGovernancePack },
   { category: 'ethics', pack: ethicsPack },
   { category: 'ir', pack: irPack },
+  { category: 'security', pack: securityPack },
 ];
 
 export function getRegisteredPacks(): ContentPack[] {
