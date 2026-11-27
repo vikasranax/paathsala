@@ -5,6 +5,8 @@ export type NoteCategory =
   | 'environment'
   | 'economy'
   | 'science'
+  | 'ethics'
+  | 'ir'
   | 'maths'
   | 'reasoning'
   | 'english'
@@ -18,6 +20,8 @@ export const categoryOrder: NoteCategory[] = [
   'environment',
   'economy',
   'science',
+  'ethics',
+  'ir',
   'maths',
   'reasoning',
   'english',
@@ -32,6 +36,8 @@ export const categoryLabels: Record<NoteCategory, string> = {
   environment: 'Environment',
   economy: 'Economy',
   science: 'Science',
+  ethics: 'Ethics',
+  ir: 'International Relations',
   maths: 'Maths',
   reasoning: 'Reasoning',
   english: 'English',
@@ -40,7 +46,7 @@ export const categoryLabels: Record<NoteCategory, string> = {
 };
 
 // The "GS" chip shows these General Studies subjects together.
-export const gsCategories: NoteCategory[] = ['history', 'polity', 'geography', 'environment', 'economy', 'science'];
+export const gsCategories: NoteCategory[] = ['history', 'polity', 'geography', 'environment', 'economy', 'science', 'ethics', 'ir'];
 
 // Used for the older notes written before categories existed.
 export function categoryFromTopic(topicId: string): NoteCategory {
@@ -62,6 +68,10 @@ export function categoryFromTopic(topicId: string): NoteCategory {
     case 'botany':
     case 'zoology':
       return 'science';
+    case 'ethics':
+      return 'ethics';
+    case 'ir':
+      return 'ir';
     case 'maths':
     case 'quant':
       return 'maths';
